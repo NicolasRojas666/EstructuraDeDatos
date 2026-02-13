@@ -1,0 +1,83 @@
+#include <iostream>
+
+using namespace std;
+
+int suma(int a, int b);
+int par_impar(int n);
+void tabla(int n);
+
+int main()
+{
+    int opcion;
+
+    cout<<"MENU DE OPCIONES"<<endl;
+    cout<<"1. Funcion Secuencial (Suma)"<<endl;
+    cout<<"2. Funcion Condicional (Par o Impar)"<<endl;
+    cout<<"3. Funcion Bucle (Tabla de Multiplicar)"<<endl;
+    cout<<"4. Salir"<<endl;
+    cout<<"Seleccione una opcion: ";
+    cin>>opcion;
+
+    if(opcion==1)
+    {
+        int x,y,resultado;
+        cout<<"Ingrese el primer numero: ";
+        cin>>x;
+        cout<<"Ingrese el segundo numero: ";
+        cin>>y;
+
+        resultado = suma(x,y);
+        cout<<"La suma es: "<<resultado<<endl;
+    }
+
+    if(opcion==2)
+    {
+        int num;
+        cout<<"Ingrese un numero: ";
+        cin>>num;
+
+        par_impar(num);
+    }
+
+    if(opcion==3)
+    {
+        int num;
+        cout<<"Ingrese un numero para ver su tabla: ";
+        cin>>num;
+
+        tabla(num);
+    }
+
+    if(opcion==4)
+    {
+        cout<<"Programa finalizado"<<endl;
+    }
+
+    return 0;
+}
+
+int suma(int a, int b)
+{
+    int r;
+    r = a + b;
+    return r;
+}
+
+int par_impar(int n)
+{
+    if(n%2==0)
+        cout<<"El numero es PAR"<<endl;
+    else
+        cout<<"El numero es IMPAR"<<endl;
+
+    return 0;
+}
+
+void tabla(int n)
+{
+    int i;
+    for(i=1; i<=10; i++)
+    {
+        cout<<n<<" x "<<i<<" = "<<n*i<<endl;
+    }
+}
