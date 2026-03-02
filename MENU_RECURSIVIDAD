@@ -1,0 +1,107 @@
+#include <iostream>
+using namespace std;
+
+long long factorial(int n);
+int sumatabla(int a, int b);
+char digitoACaracter(int digito);
+void convertir(int num, int base);
+void binario(int num);
+void octal(int num);
+void hexadecimal(int num);
+void Menu();
+
+int main() {
+    int opcion;
+    int num;
+
+    do {
+        Menu();
+        cin >> opcion;
+
+        if (opcion == 1) {
+            cout << "Numero para factorial: ";
+            cin >> num;
+            if (num < 0) cout << "No negativos." << endl;
+            else cout << "Resultado: " << factorial(num) << endl;
+        }
+        else if (opcion == 2) {
+            for (int i = 1; i <= 10; i++) {
+                for (int j = 1; j <= 10; j++) {
+                    cout << i << " + " << j << " = " << sumatabla(i, j) << "\t";
+                }
+                cout << endl;
+            }
+        }
+        else if (opcion == 3) {
+            int subOpcion;
+            cout << "1.Binario, 2.Octal, 3.Hex: ";
+            cin >> subOpcion;
+            cout << "Numero decimal: ";
+            cin >> num;
+            if (num < 0) {
+                cout << "Solo positivos." << endl;
+            }
+            else {
+                cout << "Resultado: ";
+                switch (subOpcion) {
+                case 1: binario(num); break;
+                case 2: octal(num); break;
+                case 3: hexadecimal(num); break;
+                default: cout << "Invalido";
+                }
+                cout << endl;
+            }
+        }
+    } while (opcion != 0);
+
+    cout << "fin del codigo" << endl;
+    return 0;
+}
+
+long long factorial(int n) {
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
+}
+
+int sumatabla(int a, int b) {
+    if (b == 0)
+        return a;
+    else
+        return 1 + sumatabla(a, b - 1);
+}
+
+char digitoACaracter(int digito) {
+    if (digito < 10)
+        return '0' + digito;
+    else
+        return 'A' + (digito - 10);
+}
+
+void convertir(int num, int base) {
+    if (num == 0) return;
+    convertir(num / base, base);
+    cout << digitoACaracter(num % base);
+}
+
+void binario(int num) {
+    if (num == 0) cout << "0";
+    else convertir(num, 2);
+}
+
+void octal(int num) {
+    if (num == 0) cout << "0";
+    else convertir(num, 8);
+}
+
+void hexadecimal(int num) {
+    if (num == 0) cout << "0";
+    else convertir(num, 16);
+}
+
+void Menu() {
+    cout << "\n1. Factorial (Recursivo)" << endl;
+    cout << "2. Suma Tablas (Ejercicio 13)" << endl;
+    cout << "3. Conversiones De Base (Ejercicio 16)" << endl;
+    cout << "0. Salir" << endl;
+    cout << "Opcion: ";
+}
