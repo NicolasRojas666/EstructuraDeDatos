@@ -1,0 +1,205 @@
+nodo.h
+#ifndef NODO_H
+#define NODO_H
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class NODO {
+public:
+    int dato;
+    string nombre;
+    NODO* sig;
+
+    NODO();
+};
+
+#endif
+nodo cpp
+#include "NODO.h"
+
+NODO::NODO() {
+    dato = 0;
+    nombre = "";
+    sig = NULL;
+}
+pila.h
+#ifndef PILA_H
+#define PILA_H
+
+#include "NODO.h"
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+class PILA {
+    NODO* inicio;
+
+public:
+    PILA();
+    void push();
+    void pop();
+    void show();
+    void top();
+    void size();
+};
+
+#endif
+pila.cpp
+#include "PILA.h"
+
+PILA::PILA() {
+    inicio = NULL;
+}
+
+void PILA::push() {
+    int valor;
+    string valor2;
+    NODO* aux = new NODO;
+
+    system("cls");
+    cout << "Ingresa el id del proceso: ";
+    cin >> valor;
+
+    cout << "Ingresa el nombre del proceso: ";
+    cin.ignore(1000, '\n');  // 👈 FIX
+    getline(cin, valor2);
+
+    aux->dato = valor;
+    aux->nombre = valor2;
+    aux->sig = NULL;
+
+    if (inicio != NULL)
+        aux->sig = inicio;
+
+    inicio = aux;
+
+    cout << "Nuevo proceso insertado en la pila!\n";
+    system("pause");
+}
+
+void PILA::pop() {
+    if (inicio == NULL) {
+        system("cls");
+        cout << "\nLa pila esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        NODO* temp = inicio;
+        inicio = inicio->sig;
+
+        system("cls");
+        cout << "\nEl proceso eliminado es: "
+            << temp->dato << " - " << temp->nombre << "\n" << endl;
+
+        delete temp;
+        system("pause");
+    }
+}
+
+void PILA::show() {
+    NODO* aux1 = inicio;
+
+    if (inicio == NULL) {
+        system("cls");
+        cout << "\nLa pila esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        system("cls");
+        cout << "Procesos:\n" << endl;
+
+        while (aux1 != NULL) {
+            cout << aux1->dato << " - " << aux1->nombre << "\n" << endl;
+            aux1 = aux1->sig;
+        }
+
+        system("pause");
+    }
+}
+
+void PILA::top() {
+    if (inicio == NULL) {
+        system("cls");
+        cout << "\nLa pila esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        system("cls");
+        cout << "Proceso TOP:\n" << endl;
+        cout << inicio->dato << " - " << inicio->nombre << "\n" << endl;
+        system("pause");
+    }
+}
+
+void PILA::size() {
+    NODO* aux1 = inicio;
+
+    if (inicio == NULL) {
+        system("cls");
+        cout << "\nLa pila esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        int contador = 0;
+
+        while (aux1 != NULL) {
+            contador++;
+            aux1 = aux1->sig;
+        }
+
+        system("cls");
+        cout << "El tamano de la pila es: '" << contador << "'\n" << endl;
+        system("pause");
+    }
+}
+main
+#include "PILA.h"
+
+int main() {
+    PILA l;
+    int opcion;
+
+    do {
+        system("cls");
+        cout << "[:]Pila en lista enlazada" << endl;
+        cout << "[1]Push" << endl;
+        cout << "[2]Pop" << endl;
+        cout << "[3]Mostrar" << endl;
+        cout << "[4]Top" << endl;
+        cout << "[5]Size" << endl;
+        cout << "[0]Salir" << endl;
+        cout << "\nIngresa tu opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            l.push();
+            break;
+        case 2:
+            l.pop();
+            break;
+        case 3:
+            l.show();
+            break;
+        case 4:
+            l.top();
+            break;
+        case 5:
+            l.size();
+            break;
+        case 0:
+            return 0;
+        default:
+            cout << "Por favor ingresa una opcion correcta.\n";
+            system("pause");
+            break;
+        }
+
+    } while (opcion != 0);
+
+    return 0;
+}
