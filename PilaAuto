@@ -1,0 +1,162 @@
+Nodo.h
+#pragma once
+#include <string>
+using namespace std;
+
+class Nodo {
+public:
+    int ID;
+    string Marca;
+    string Modelo;
+    int Anio;
+    string Color;
+
+    Nodo* puntero;
+
+    Nodo();
+};
+
+Nodo cpp
+#include "Nodo.h"
+
+Nodo::Nodo() {
+    ID = 0;
+    Marca = "Unknown";
+    Modelo = "Unknown";
+    Anio = 0;
+    Color = "Unknown";
+    puntero = NULL;
+}
+
+Pila.h
+#pragma once
+#include "Nodo.h"
+
+class Pila {
+public:
+    Nodo* tope;
+
+    Pila();
+
+    void Apilar();
+    void Desapilar();
+    void Mostrar();
+    bool Vacia();
+};
+
+Pila cpp
+#include <iostream>
+#include "Pila.h"
+
+using namespace std;
+
+Pila::Pila() {
+    tope = NULL;
+}
+
+bool Pila::Vacia() {
+    return (tope == NULL);
+}
+
+void Pila::Apilar() {
+    Nodo* Elemento = new Nodo;
+
+    cout << "ID: "; cin >> Elemento->ID;
+    cin.ignore();
+
+    cout << "Marca: "; getline(cin, Elemento->Marca);
+    cout << "Modelo: "; getline(cin, Elemento->Modelo);
+
+    cout << "Anio: "; cin >> Elemento->Anio;
+    cin.ignore();
+
+    cout << "Color: "; getline(cin, Elemento->Color);
+
+    Elemento->puntero = tope;
+    tope = Elemento;
+}
+
+void Pila::Desapilar() {
+    if (tope != NULL) {
+        Nodo* aux = tope;
+
+        cout << "\n--- AUTO ELIMINADO ---" << endl;
+        cout << "ID: " << aux->ID << endl;
+        cout << "Marca: " << aux->Marca << endl;
+        cout << "Modelo: " << aux->Modelo << endl;
+        cout << "Anio: " << aux->Anio << endl;
+        cout << "Color: " << aux->Color << endl;
+
+        tope = tope->puntero;
+        delete aux;
+    }
+    else {
+        cout << "La pila esta vacia" << endl;
+    }
+}
+
+void Pila::Mostrar() {
+    if (tope == NULL) {
+        cout << "La pila esta vacia" << endl;
+    }
+    else {
+        Nodo* aux = tope;
+
+        cout << "\n--- AUTOS EN LA PILA ---" << endl;
+
+        while (aux != NULL) {
+            cout << "ID: " << aux->ID << endl;
+            cout << "Marca: " << aux->Marca << endl;
+            cout << "Modelo: " << aux->Modelo << endl;
+            cout << "Anio: " << aux->Anio << endl;
+            cout << "Color: " << aux->Color << endl;
+            cout << "----------------------" << endl;
+
+            aux = aux->puntero;
+        }
+    }
+}
+
+Main
+#include <iostream>
+#include "Pila.h"
+
+using namespace std;
+
+int main() {
+    Pila pila;
+    int opc = 0;
+
+    do {
+        cout << "\n1. LA PILA ESTA VACIA?" << endl;
+        cout << "2. APILAR AUTO" << endl;
+        cout << "3. DESAPILAR AUTO" << endl;
+        cout << "4. MOSTRAR PILA" << endl;
+        cout << "5. FINALIZAR" << endl;
+        cout << "Opcion: "; cin >> opc;
+
+        switch (opc) {
+        case 1:
+            if (pila.Vacia())
+                cout << "La pila esta vacia" << endl;
+            else
+                cout << "Hay autos en la pila" << endl;
+            break;
+
+        case 2:
+            pila.Apilar();
+            break;
+
+        case 3:
+            pila.Desapilar();
+            break;
+
+        case 4:
+            pila.Mostrar();
+            break;
+        }
+
+    } while (opc != 5);
+
+    return 0;
+}
