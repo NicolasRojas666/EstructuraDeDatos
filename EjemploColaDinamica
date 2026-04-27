@@ -1,0 +1,114 @@
+Nodo.h
+#ifndef NODO_H
+#define NODO_H
+
+#include <cstddef> 
+
+typedef char DATA_TYPE;
+
+struct nodo {
+    DATA_TYPE data;
+    nodo* next;
+};
+
+#endif
+
+QueueDin.h
+
+#ifndef QUEUEDIN_H
+#define QUEUEDIN_H
+
+#include "nodo.h"
+
+class QueueDin {
+
+    int ITEMS, ITEMSIZE;
+    nodo* cola, * cabeza;
+
+public:
+    QueueDin();
+    ~QueueDin();
+
+    DATA_TYPE put(DATA_TYPE valor);
+    int empty();
+    DATA_TYPE get();
+};
+
+#endif
+
+QueueDin cpp
+#include <cstddef>   
+#include "QueueDin.h"
+
+QueueDin::QueueDin() : cola(NULL), cabeza(NULL), ITEMS(0), ITEMSIZE(sizeof(DATA_TYPE)) {}
+
+QueueDin::~QueueDin() {}
+
+DATA_TYPE QueueDin::put(DATA_TYPE valor)
+{
+    nodo* temp;
+
+    temp = new nodo;
+    if (temp == NULL) return -1;
+
+    ITEMS++;
+    temp->data = valor;
+    temp->next = NULL;
+
+    if (cabeza == NULL)
+    {
+        cabeza = temp;
+        cola = temp;
+    }
+    else
+    {
+        cola->next = temp;
+        cola = temp;
+    }
+    return valor;
+}
+
+int QueueDin::empty() { return ITEMS == 0; }
+
+DATA_TYPE QueueDin::get()
+{
+    nodo* temp;
+    DATA_TYPE d;
+
+    if (empty()) return -1;
+
+    d = cabeza->data;
+    temp = cabeza->next;
+    if (cabeza) delete cabeza;
+    cabeza = temp;
+    ITEMS--;
+    return d;
+}
+
+
+MAIN
+
+#include <iostream>
+#include "QueueDin.h"
+
+using namespace std;
+
+int main()
+{
+    QueueDin s;
+    DATA_TYPE d;
+
+    for (d = 'A'; d <= 'Z'; d++) {
+        s.put(d);
+        cout << d << " ";
+    }
+
+    cout << endl;
+
+    while (!s.empty())
+        cout << (DATA_TYPE)s.get() << " ";
+
+    cout << "\nPara terminar presione <Enter>...";
+    cin.get();
+    return 0;
+}
